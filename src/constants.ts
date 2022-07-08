@@ -4,19 +4,22 @@ export const networks_ENUM = {
 };
 
 export const deployed_address = {
-  POCP_Forwarder: '0x025442a46113DdA079dB178E5Cb0714E5ca51FB3',
-  POCP_Proxy: '0x7cd27c57e1CBb81Ba8f3aF35CFB275CB107C897d',
+  POCP_Manager: '0xf00eAbb380752fed6414f3C12e3D8F976C7D024d',
+  POCP_Beacon: '0xDcc7133abBA15B8f4Bf155A372C17744E0941f28',
+  POCP_Router: '0x1C6D20042bfc8474051Aba9FB4Ff85880089A669',
 };
 
 export const deployed_address_polygon = {
-  POCP_Forwarder: '0x321F8c1E5EC10d074Bce11CFE010d81134DC95D6',
-  POCP_Proxy: '0xbd144FFb12e9dC694e5525868f3e58b6685a054a',
+  POCP_Manager: '0xDA6F4387C344f1312439E05E9f9580882abA6958',
+  POCP_Beacon: '0x083842b3F6739948D26C152C137929E0D3a906b9',
+  POCP_Router: '0xB9Acf5287881160e8CE66b53b507F6350d7a7b1B',
 };
 
 export const BASE_URL = {
-  relayer: 'https://staging.api.drepute.xyz:5001/eth/relay',
   subgraph_mainnet:
-    'https://api.thegraph.com/subgraphs/id/QmdfbRhc2m33fJWXhwcwBNxSBjWqoCFNMkxzEh97n5ws9d',
-  subgraph:
-    'https://api.thegraph.com/subgraphs/id/Qmeym2txcTkKg6C7mekgm3JtvFDQ2suQfx2QrdBHGgiPq3',
+    'https://api.thegraph.com/subgraphs/name/eth-jashan/rep3-matic',
+  subgraph: 'https://api.thegraph.com/subgraphs/name/eth-jashan/rep3-mumbai',
 };
+
+export const SIGNING_DOMAIN_NAME = 'REP3Signer';
+export const SIGNING_DOMAIN_VERSION = '0.0.1';

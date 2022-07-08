@@ -1,62 +1,76 @@
-export const claimedTokenQuery_claimer = `
-query($communityId: String, $claimerAddress:String) {
-    pocpTokens( where:{community:$communityId,claimer:$claimerAddress}) {
-      id
-    community {
-      id
-      name
-      txSigner
-      txhash
-    }
-      ipfsMetaUri
-      claimer
-      approver    
-    }
-  }
-`;
+// export const daoWithTxHash = `
+// query($txHash:String) {
+//   daos(where:{txHash:$txHash}){
+//     id
+//     txHash
+//   }
+// `;
 
-export const claimedTokenQuery = `
-query($communityId: String) {
-    pocpTokens( where:{community:$communityId}) {
-      id
-    community {
-      id
-      name
-      txSigner
-      txhash
-    }
-      ipfsMetaUri
-      claimer
-      approver    
-    }
+export const daoWithTxHash = `
+query($txHash: String) {
+  daos(where:{txHash:$txHash}){
+    id
+    txHash
+    name
+    symbol
+    totalSupply
   }
-`;
-
-export const approveTokenQuery = `
-query($communityId: String) {
-    approvedTokens( where:{community:$communityId}) {
-        id
-        community {
-          id
-          name
-          txSigner
-          txhash
-        }
-        identifier 
-    }
 }
 `;
 
-export const communityWithTxHash = `
-query($txhash: String) {
-communities ( where:{txhash:$txhash}){
+export const membershipNFTsForClaimerOfDao = `
+query($claimer: String,$contractAddress:String ) {
+  membershipNFTs(where:{claimer:$claimer,contractAddress:$contractAddress}){
     id
-    name
-    approver{
+    metadataUri
+    level
+    category
+    claimer
+    contractAddress{
       id
+      txHash
+      name
+      symbol
     }
-    txSigner
-    txhash
+    tokenID
+  }
+}
+`;
+
+export const membershipNFTsForClaimer = `
+query($claimer: String) {
+  membershipNFTs(where:{claimer:$claimer}){
+    id
+    metadataUri
+    level
+    category
+    claimer
+    contractAddress{
+      id
+      txHash
+      name
+      symbol
+    }
+    tokenID
+  }
+}
+`;
+
+export const membershipNFTsWithHash = `
+query($id: String) {
+  membershipNFTs(where:{id:$id}){
+    id
+    metadataUri
+    level
+    category
+    claimer
+    contractAddress{
+      id
+      txHash
+      name
+      symbol
+    }
+    tokenID
   }
 }
 `;

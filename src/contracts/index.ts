@@ -4,8 +4,11 @@ import {
   deployed_address_polygon,
   networks_ENUM,
 } from '../constants';
-import forwarder_mumbai from '../contracts/abi/mumbai/minimalForwarder.json';
-import pocp_mumbai from '../contracts/abi/mumbai/POCP.json';
+
+import pocpMangerAbi from '../contracts/abi/manager/Manager.json';
+import pocpBeaconAbi from '../contracts/abi/beacon/Beacon.json';
+import pocpProxyAbi from '../contracts/abi/proxy/pocpProxy.json';
+import pocpRouterAbi from '../contracts/abi/router/Router.json';
 
 class ContractManager {
   network: number;
@@ -18,27 +21,48 @@ class ContractManager {
     switch (this.network) {
       case networks_ENUM.MUMBAI:
         return {
-          pocp: deployed_address.POCP_Proxy,
-          forwarder: deployed_address.POCP_Forwarder,
+          pocpManger: deployed_address.POCP_Manager,
+          pocpBeacon: deployed_address.POCP_Beacon,
+          pocpRouter: deployed_address.POCP_Router,
         };
       case networks_ENUM.POLYGON:
         return {
-          pocp: deployed_address_polygon.POCP_Proxy,
-          forwarder: deployed_address_polygon.POCP_Forwarder,
+          pocpManger: deployed_address_polygon.POCP_Manager,
+          pocpBeacon: deployed_address_polygon.POCP_Beacon,
+          pocpRouter: deployed_address_polygon.POCP_Router,
         };
       default:
-        return { pocp: 'not_deployed', forwarder: 'not_deployed' };
+        return {
+          pocpManger: 'not_deployed',
+          pocpBeacon: 'not_deployed',
+          pocpRouter: 'not_deployed',
+        };
     }
   };
 
   getAbi = () => {
     switch (this.network) {
       case networks_ENUM.MUMBAI:
-        return { pocp: pocp_mumbai.abi, forwarder: forwarder_mumbai.abi };
+        return {
+          pocpManger: pocpMangerAbi.abi,
+          pocpBeacon: pocpBeaconAbi.abi,
+          pocpProxy: pocpProxyAbi.abi,
+          pocpRouter: pocpRouterAbi.abi,
+        };
       case networks_ENUM.POLYGON:
-        return { pocp: pocp_mumbai.abi, forwarder: forwarder_mumbai.abi };
+        return {
+          pocpManger: pocpMangerAbi.abi,
+          pocpBeacon: pocpBeaconAbi.abi,
+          pocpProxy: pocpProxyAbi.abi,
+          pocpRouter: pocpRouterAbi.abi,
+        };
       default:
-        return { pocp: 'not_deployed', forwarder: 'not_deployed' };
+        return {
+          pocpManger: pocpMangerAbi.abi,
+          pocpBeacon: pocpBeaconAbi.abi,
+          pocpProxy: pocpProxyAbi.abi,
+          pocpRouter: pocpRouterAbi.abi,
+        };
     }
   };
 }

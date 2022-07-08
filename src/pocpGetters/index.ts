@@ -1,139 +1,29 @@
 import { subgraphGetterFunction } from '../utils/subgraphGetters';
 import {
-  claimedTokenQuery_claimer,
-  claimedTokenQuery,
-  approveTokenQuery,
-  communityWithTxHash,
+  daoWithTxHash,
+  membershipNFTsForClaimerOfDao,
+  membershipNFTsWithHash,
 } from '../subgraphQuery';
 
 class PocpGetters {
-  network: number;
-  constructor(givenNetwork: number) {
-    this.network = givenNetwork;
+  subgraphUrl: string;
+  constructor(url: string) {
+    this.subgraphUrl = url;
   }
-  /*
-   * @param community id
-   * @param claimer address
-   * @returns Array of tokens
-   * @throws "Error"
-   */
-  getClaimedBadgesOfClaimers = async (
-    communityId: string,
-    claimerAddress: string
-  ) => {
-    try {
-      const claimToken = await subgraphGetterFunction(
-        claimedTokenQuery_claimer,
-        {
-          communityId,
-          claimerAddress,
-        },
-        this.network
-      );
-      return claimToken;
-    } catch (error) {
-      throw error;
-    }
-  };
 
   /*
    * @param community id
    * @returns Array of tokens
    * @throws "Error"
    */
-  getClaimedBadges = async (communityId: string) => {
-    try {
-      const claimToken = await subgraphGetterFunction(
-        claimedTokenQuery,
-        {
-          communityId,
-        },
-        this.network
-      );
-      return claimToken;
-    } catch (error) {
-      throw error;
-    }
-  };
-
-  /*
-   * @param community id
-   * @returns Array of tokens
-   * @throws "Error"
-   */
-
-  getApproveBadges = async (communityId: string) => {
-    try {
-      const approveToken = await subgraphGetterFunction(
-        approveTokenQuery,
-        {
-          communityId,
-        },
-        this.network
-      );
-
-      return approveToken;
-    } catch (error) {
-      throw error;
-    }
-  };
-
-  /*
-   * @param community id
-   * @param claimer address
-   * @returns Array of tokens
-   * @throws "Error"
-   */
-
-  getUnclaimedBadges = async (communityId: string) => {
-    try {
-      //change
-      const approveToken = await subgraphGetterFunction(
-        approveTokenQuery,
-        {
-          communityId,
-        },
-        this.network
-      );
-      const claimToken = await subgraphGetterFunction(
-        claimedTokenQuery,
-        {
-          communityId,
-        },
-        this.network
-      );
-      const unclaimedToken: any[] = [];
-
-      approveToken?.data?.approvedTokens.forEach((approve: any) => {
-        const filteredToken = claimToken?.data?.pocpTokens.filter(
-          (x: any) => x.id.toString() === approve.id.toString()
-        );
-        console.log('filtered Token', filteredToken, approve.id, claimToken);
-        if (filteredToken.length === 0) {
-          unclaimedToken.push(approve);
-        }
-      });
-      console.log(approveToken, claimToken, unclaimedToken);
-      return unclaimedToken;
-    } catch (error) {
-      throw error;
-    }
-  };
-
-  /*
-   * @param tx hash
-   * @returns Community Info
-   * @throws "Error"
-   */
-
-  getCommunityIdOfHash = async (txhash: string) => {
+  getdaoInfoForHash = async (txHash: string) => {
     try {
       const communityDetail = await subgraphGetterFunction(
-        communityWithTxHash,
+        daoWithTxHash,
         {
-          txhash,
+          txHash,
         },
-        this.network
+        this.subgraphUrl
       );
       return communityDetail;
     } catch (error) {
@@ -141,12 +31,39 @@ class PocpGetters {
     }
   };
 
-  /*
-   * @param custom the graph query
-   * @param if variable available
-   * @returns result for the query from subgraph
-   * @throws "Error"
-   */
+  membershipNftWithClaimerOfDao = async (
+    claimer: string,
+    contractAddress: string
+  ) => {
+    try {
+      const communityDetail = await subgraphGetterFunction(
+        membershipNFTsForClaimerOfDao,
+        {
+          claimer,
+          contractAddress,
+        },
+        this.subgraphUrl
+      );
+      return communityDetail;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  getMembershipNftsForHash = async (id: string) => {
+    try {
+      const communityDetail = await subgraphGetterFunction(
+        membershipNFTsWithHash,
+        {
+          id,
+        },
+        this.subgraphUrl
+      );
+      return communityDetail;
+    } catch (error) {
+      throw error;
+    }
+  };
 
   getForCustomQuery = async (
     customQuery: string,
@@ -156,7 +73,7 @@ class PocpGetters {
       const approveToken = await subgraphGetterFunction(
         customQuery,
         variableObject && variableObject,
-        this.network
+        this.subgraphUrl
       );
 
       return approveToken;

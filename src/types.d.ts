@@ -1,13 +1,14 @@
-import { ethers } from 'ethers';
-
 export interface IContractAddress {
-  pocp: string;
-  forwarder: string;
+  pocpManger: string;
+  pocpBeacon: string;
+  pocpRouter: string;
 }
 
 export interface IContractAbi {
-  pocp: ethers.ContractInterface | string;
-  forwarder: ethers.ContractInterface | string;
+  pocpManger: string | any;
+  pocpBeacon: string | any;
+  pocpProxy: string | any;
+  pocpRouter: string | any;
 }
 
 export interface IContractFactory {
@@ -17,12 +18,12 @@ export interface IContractFactory {
 }
 
 export interface IContract {
-  pocp: ethers.Contract | undefined;
-  forwarder: ethers.Contract | undefined;
+  pocpManager: any | undefined;
+  pocpBeacon: any | undefined;
 }
 
 export interface RegisterDaoResponse {
-  transactionReceipt: ethers.Transaction;
+  transactionReceipt: any;
   communityId: number;
 }
 
@@ -31,8 +32,9 @@ export interface RelayRequestResponse {
 }
 
 export interface IPocpConfig {
-  relayer_token?: string;
-  url: string;
+  biconomyInstance?: any;
+  apiKey: number;
+  relayURL: string;
 }
 
 export interface relayerData {
